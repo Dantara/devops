@@ -30,6 +30,32 @@ It was choosen because it is simple and provide an ability to create apps quickl
 ## Tests
 - [pytest](https://github.com/pytest-dev/pytest/) - framework makes it easy to write small tests
 
+The testing is done using `pytest` framework, since it:
+
+- has fixture mechanism for state preparation
+- provides easy interface for testing
+- is a flexible framework allowing custom plugins and test parametrization
+
+## Unit testing best practices
+
+- Tests must be fully independent. In other words:
+
+  - run on fresh data every time
+  - do not have contraints on execution order
+
+- Refactor code, so we can test one piece of functionality at a time
+
+- Have small readable tests.
+
+- If there are not a lot of tests, we can add running test into pre-commit hooks
+  so that developers do not push a broken code
+
+- Keep track of test coverage to verify that new code is at least covered by tests
+
+- Unit tests should be fast in order not to slow down development.
+  If there are slow test, they should be filtered out and run periodically in a CI job.
+
+
 ## List of other best practices
 
 1. Follow guidelines from PEP 8 (Style Guide for Python Code)

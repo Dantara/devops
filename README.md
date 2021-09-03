@@ -41,11 +41,23 @@ To run the app do the following in the terminal
 1. Check the [existing image on Docker Hub](https://hub.docker.com/r/dantara/devops-python-app)
 2. Fetch it and run with `docker run --rm -it -p 5000:5000 dantara/devops-python-app`
 
+## Tests
+
+First of all, to run tests you need to install all development requirements:
+```sh
+pip3 install -r dev-requirements.txt
+```
+
+And then simply type:
+```sh
+pytest
+```
+
 ## Contributing
 
 1. Fork repository (<https://github.com/dantara/devops/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
+3. Commit your changes (`git commit -m 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
 
