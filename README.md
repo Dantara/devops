@@ -53,6 +53,39 @@ And then simply type:
 pytest
 ```
 
+
+## Ansible
+
+Whole ansible insfranstracture management is placed in `ansible` folder.
+
+### Running `docker.yml` playbook
+
+1. Change current directory to ansible one:
+
+``` sh
+cd ansible
+```
+
+2. Update user and host in inventory (`inventory/hosts.yml` file)
+
+``` yaml
+  all:
+    hosts:
+      app:
+        ansible_host: 127.0.0.1  # Set target host
+        ansible_user: root  # Set user
+```
+
+3. Chech SSH access to target host
+
+4. Run the playbook to install docker and docker compose on target host:
+
+``` sh
+ansible-playbook docker.yml
+```
+
+This playbook and `docker` role supports all `ubuntu` and `debian` based linux distributives on target machine. 
+
 ## Contributing
 
 1. Fork repository (<https://github.com/dantara/devops/fork>)
