@@ -1,8 +1,10 @@
 from flask import Flask
 from datetime import datetime
+from prometheus_flask_exporter import PrometheusMetrics
 import pytz
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 moscow_tz = pytz.timezone("Europe/Moscow")
 
 def get_moscow_time():

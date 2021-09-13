@@ -88,6 +88,13 @@ ansible-playbook docker.yml
 
 This playbook and `docker` role supports all `ubuntu` and `debian` based linux distributives on target machine. 
 
+### Monitoring infrastructure
+To run monitoring infrastructure type:
+``` sh
+cd monitoring
+docker-compose up
+```
+
 ### Deploy python app
 
 Run the playbook to deploy application
