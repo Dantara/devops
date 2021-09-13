@@ -16,7 +16,7 @@ Loki in Grafana:
 ![](./images/loki.png)
 
 Prometheus:
-![](./images/prometeus2.png)
+![](./images/prometheus2.png)
 
 Prometheus in Grafana:
-![](./images/prometeus.png)
+![](./images/prometheus.png)
