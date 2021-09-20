@@ -1,6 +1,6 @@
-# Kubernetes lab
+# Kubernetes labs
 
-Lab 9 of devops course on Kubernetes topic.
+Labs 9 & 10 of devops course on Kubernetes topic.
 
 ## Installation
 
@@ -124,3 +124,64 @@ Opening in existing browser session.
 ```
 
 ![](./images/auto-kuber.png)
+
+## Helm deployment
+
+1. Create chart template:
+
+``` sh
+>>> helm create devops-python-app
+Creating devops-python-app
+```
+
+2. Update newly created chart. You can find updated chart in `devops-python-app` folder.
+
+3. Pack updated chart:
+
+``` sh
+>>> helm package devops-python-app
+Successfully packaged chart and saved it to: /dantara/Projects/Python/devops/k8s/devops-python-app-0.1.0.tgz
+```
+
+4. Install your package:
+
+``` sh
+>>> helm install devops-python-app ./devops-python-app-0.1.0.tgz
+NAME: devops-python-app
+LAST DEPLOYED: Mon Sep 20 23:30:00 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+```
+
+5. Check up your deployment:
+
+``` sh
+>>> kubectl get pods,svc
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/devops-python-app-7c95c86b48-bcfs9   1/1     Running   0          96s
+pod/devops-python-app-7c95c86b48-jjj5r   1/1     Running   0          96s
+pod/devops-python-app-7c95c86b48-kvncd   1/1     Running   0          96s
+
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE
+service/devops-python-app   LoadBalancer   10.107.62.248   10.107.62.248   5000:32712/TCP   96s
+service/kubernetes          ClusterIP      10.96.0.1       <none>          443/TCP          63m
+```
+
+6. Check up your connection:
+
+``` sh
+>>> minikube service devops-python-app
+|-----------|-------------------|-------------|---------------------------|
+| NAMESPACE |       NAME        | TARGET PORT |            URL            |
+|-----------|-------------------|-------------|---------------------------|
+| default   | devops-python-app | http/5000   | http://192.168.49.2:32712 |
+|-----------|-------------------|-------------|---------------------------|
+🎉  Opening service default/devops-python-app in default browser...
+Opening in existing browser session.
+
+>>> curl 192.168.49.2:32712 
+<center><h1>Current time in Moscow is 23:31:58</h1></center>%
+```
+
+![](./images/helm-kuber.png)
