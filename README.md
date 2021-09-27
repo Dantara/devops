@@ -28,6 +28,12 @@ To run the app do the following in the terminal
 3. Start the server with `python3 app.py`
 4. Open the [suggested link in the browser](http://127.0.0.1:5000/) to see the app
 
+#### Routes
+- Application runs on port `5000`
+- Home page is the root page `/`
+- Application metrics are placed at `/metrics`
+- List of all visits is placed at `/visits`
+
 ## Docker
 
 ### Building docker image

@@ -12,6 +12,8 @@ COPY ./app.py .
 
 USER docker_user
 
+RUN mkdir logs
+
 ENTRYPOINT [ "python" ]
 
 CMD [ "app.py" ]

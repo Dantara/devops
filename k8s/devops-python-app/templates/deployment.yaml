@@ -37,7 +37,7 @@ spec:
             - name: PG_CREDS
               valueFrom:
                 secretKeyRef:
-                  name: database
+                  name: {{ .Values.secret.name }}
                   key: pg_creds
           ports:
             - name: http
@@ -53,6 +53,14 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/config"
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "devops-python-app.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

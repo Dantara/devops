@@ -38,6 +38,8 @@ services:
         - loki
       ports:
         - 5000:5000
+      volumes:
+        - ../app_python/logs:/app/logs
       <<: *defaults
 
     loki:
