@@ -29,6 +29,17 @@ spec:
       serviceAccountName: {{ include "devops-python-app.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: download-cats
+          image: busybox
+          command:
+            - wget
+            - "-O"
+            - "/downloads/cats.htm"
+            - {{ .Values.cats.url }}
+          volumeMounts:
+            - name: downloads
+              mountPath: "/downloads"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -57,16 +68,18 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config
-              # mountPath: "/etc/config"
               mountPath: {{ .Values.volumes.config }}
               readOnly: true
             - name: visits
-              # mountPath: "/app/logs"
               mountPath: {{ .Values.volumes.visits }}
+            - name: downloads
+              mountPath: {{ .Values.volumes.downloads }}
       volumes:
         - name: config
           configMap:
             name: {{ include "devops-python-app.fullname" . }}
+        - name: downloads
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
