@@ -1,10 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "devops-python-app.fullname" . }}
   labels:
     {{- include "devops-python-app.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ .Values.service.name }}
+  podManagementPolicy: {{ .Values.statefulSet.podManagementPolicy }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -55,8 +57,12 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config
-              mountPath: "/etc/config"
+              # mountPath: "/etc/config"
+              mountPath: {{ .Values.volumes.config }}
               readOnly: true
+            - name: visits
+              # mountPath: "/app/logs"
+              mountPath: {{ .Values.volumes.visits }}
       volumes:
         - name: config
           configMap:
@@ -73,3 +79,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: visits
+      spec:
+        {{- toYaml .Values.statefulSet.volumeClaimTemplates.spec | nindent 8 }}

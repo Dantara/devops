@@ -6,7 +6,7 @@ replicaCount: 3
 
 image:
   repository: dantara/devops-python-app
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -41,8 +41,22 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  name: devops-python-app
   type: LoadBalancer
   port: 5000
+
+statefulSet:
+  podManagementPolicy: "Parallel"
+  volumeClaimTemplates:
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 256M
+
+volumes:
+  config: "/etc/config"
+  visits: "/app/logs"
 
 ingress:
   enabled: false
